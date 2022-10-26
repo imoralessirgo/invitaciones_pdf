@@ -14,17 +14,21 @@ mapa_invitados = {
 boletos = ""
 invitados = ""
 
-# font_boletos = "Safira March Personal Use"
-# font_invitados = "Assistant Lite"
+path = "../../../mnt/i/My\ Drive/PROYECTOS\ 2022/XIMENA\ Y\ HONORE/INVITACIÓN\ DIGITAL\ XH/INVITACIONES\ PERSONALIZADAS/"
 
-font_boletos = "Arial"
-font_invitados = "Arial"
+font_boletos = "SafiraMarch-gxeKY"
+font_invitados = "Assistant-Lite"
+
+# font_boletos = "Arial"
+# font_invitados = "Arial"
 
 lista_1 = "Xime.csv"
 lista_2 = "Hono.csv"
 
 def nuevo_pdf(txt_boletos, txt_invitado):
     pdf = FPDF("P","mm", [376.76666667,577.58541667])
+    pdf.add_font('./Assistantant-Lite.ttf')
+    #pdf.add_font('./SafiraMarch-gxeKY.otf')
     pdf.add_page()
     pdf.set_font(font_boletos, "", 11)
     pdf.set_xy(90.4875, 374.65)
@@ -35,7 +39,7 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     pdf.set_char_spacing(5)
     with pdf.rotation(90):
         pdf.cell(295, 20, txt = txt_invitado, align = 'C')
-    pdf.output("./" + txt_invitado + ".pdf")  
+    pdf.output(path + txt_invitado + ".pdf")  
 
 
 def pdfs_para_lista(lista):
