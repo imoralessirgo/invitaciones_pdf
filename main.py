@@ -1,6 +1,8 @@
 import csv
 from json.tool import main
 from fpdf import FPDF
+from pdfrw import PageMerge, PdfReader, PdfWriter
+
 
 
 mapa_invitados = {
@@ -14,10 +16,11 @@ mapa_invitados = {
 boletos = ""
 invitados = ""
 
-path = "../../../mnt/i/My\ Drive/PROYECTOS\ 2022/XIMENA\ Y\ HONORE/INVITACIÓN\ DIGITAL\ XH/INVITACIONES\ PERSONALIZADAS/"
+path = "./inv_per/"
+#path = "../../../mnt/i/My\ Drive/PROYECTOS\ 2022/XIMENA\ Y\ HONORE/INVITACIÓN\ DIGITAL\ XH/INVITACIONES\ PERSONALIZADAS/"
 
 font_boletos = "SafiraMarch-gxeKY"
-font_invitados = "Assistant-Lite"
+font_invitados = "Assistant-Light"
 
 # font_boletos = "Arial"
 # font_invitados = "Arial"
@@ -27,8 +30,8 @@ lista_2 = "Hono.csv"
 
 def nuevo_pdf(txt_boletos, txt_invitado):
     pdf = FPDF("P","mm", [376.76666667,577.58541667])
-    pdf.add_font('Assistantant-Lite','','./Assistantant-Lite.ttf', False)
-    pdf.add_font('SafiraMarch-gxeKY', '', './SafiraMarch-gxeKY.otf', False)
+    pdf.add_font(font_invitados,'','./' + font_invitados + '.ttf', False)
+    pdf.add_font(font_boletos, '', './' + font_boletos + '.otf', False)
     pdf.add_page()
     pdf.set_font(font_boletos, "", 11)
     pdf.set_xy(90.4875, 374.65)
@@ -39,7 +42,9 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     pdf.set_char_spacing(5)
     with pdf.rotation(90):
         pdf.cell(295, 20, txt = txt_invitado, align = 'C')
-    pdf.output(path + txt_invitado + ".pdf")  
+    reader = PdfReader(fdata=bytes(pdf.output()))
+    return reader.pages[0]
+#    pdf.output(path + txt_invitado + ".pdf")  
 
 
 def pdfs_para_lista(lista):
@@ -52,7 +57,11 @@ def pdfs_para_lista(lista):
 
 
 def main():
-    nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo")
+    
+
+    writer = PdfWriter(trailer=PdfReader("./INVITACION\ XIME\ Y\ HONO\ EDITABLEpdf.pdf"))
+    PageMerge(writer.pagearray[1]).add(nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo"), prepend=False).render()
+    writer.write(path + "test" + ".pdf")
 
 if __name__=="__main__":
     main()
