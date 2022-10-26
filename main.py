@@ -1,6 +1,7 @@
 import csv
 from json.tool import main
 from fpdf import FPDF
+import io
 from pdfrw import PageMerge, PdfReader, PdfWriter
 
 
@@ -42,8 +43,7 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     pdf.set_char_spacing(5)
     with pdf.rotation(90):
         pdf.cell(295, 20, txt = txt_invitado, align = 'C')
-    reader = PdfReader(fdata=bytes(pdf.output()))
-    return reader.pages[0]
+    return pdf.output()
 #    pdf.output(path + txt_invitado + ".pdf")  
 
 
@@ -58,10 +58,18 @@ def pdfs_para_lista(lista):
 
 def main():
     
+    reader = PdfReader("./base.pdf")
+    page_overlay = PdfReader(io.BytesIO(nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo"))).getPage(0)
+    reader.getPage(0).merge_page(page2=page_overlay)
 
-    writer = PdfWriter(trailer=PdfReader("./INVITACION\ XIME\ Y\ HONO\ EDITABLEpdf.pdf"))
-    PageMerge(writer.pagearray[1]).add(nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo"), prepend=False).render()
+    writer = PdfWriter()
+    writer.append_pages_from_reader(reader)
     writer.write(path + "test" + ".pdf")
+
+
+    # writer = PdfWriter(trailer=PdfReader("./INVITACION\ XIME\ Y\ HONO\ EDITABLEpdf.pdf"))
+    # PageMerge(writer.pagearray[1]).add(nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo"), prepend=False).render()
+    # writer.write(path + "test" + ".pdf")
 
 if __name__=="__main__":
     main()
