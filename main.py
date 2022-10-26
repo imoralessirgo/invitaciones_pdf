@@ -44,10 +44,8 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     with pdf.rotation(90):
         pdf.cell(385, 20, txt = txt_invitado, align = 'C')
 
-    # pdf.set_xy(180, 350)
-    pdf.link(180, 350, 100, 100, link="https://goo.gl/maps/RLUk1SSV2RCDx1tV8")
-    # pdf.set_xy(121, 650)
-    pdf.link(121, 650, 100, 100, link="https://www.zepika.com/giftr/registry/view/uid/ximeyhono/")
+    pdf.link(225, 320, 150, 70, link="https://goo.gl/maps/RLUk1SSV2RCDx1tV8")
+    pdf.link(128, 650, 100, 70, link="https://www.zepika.com/giftr/registry/view/uid/ximeyhono/")
     return pdf.output()
 #    pdf.output(path + txt_invitado + ".pdf")  
 
@@ -62,14 +60,18 @@ def pdfs_para_lista(lista):
 
 
 def main():
-    
-    reader = PdfReader("./base.pdf")
-    page_overlay = PdfReader(io.BytesIO(nuevo_pdf("DOS INVITADOS", "CAROLINA MIJARES Y SEBASTIAN DE NYS"))).getPage(0)
-    reader.getPage(0).merge_page(page2=page_overlay)
+    with open("./Xime.csv") as f:
+        rdr = csv.reader(f, delimiter=",")
+        for row in rdr:
+            nombre = row[3].upper()
+            boletos = mapa_invitados[row[1]]
+            reader = PdfReader("./base.pdf")
+            page_overlay = PdfReader(io.BytesIO(nuevo_pdf(boletos, nombre))).getPage(0)
+            reader.getPage(0).merge_page(page2=page_overlay)
 
-    writer = PdfWriter()
-    writer.append_pages_from_reader(reader)
-    writer.write(path + "test" + ".pdf")
+            writer = PdfWriter()
+            writer.append_pages_from_reader(reader)
+            writer.write(path + nombre + ".pdf")
 
 
     # writer = PdfWriter(trailer=PdfReader("./INVITACION\ XIME\ Y\ HONO\ EDITABLEpdf.pdf"))
