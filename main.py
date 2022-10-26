@@ -35,14 +35,19 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     pdf.add_font(font_boletos, '', './' + font_boletos + '.otf', False)
     pdf.add_page()
     pdf.set_font(font_boletos, "", 11)
-    pdf.set_xy(120.65, 503.77)    
+    pdf.set_xy(100.65, 492.77)    
     pdf.set_char_spacing(5)
     pdf.cell(108, 20, txt = txt_boletos, align = 'C')
-    pdf.set_font(font_invitados, "", 22)
+    pdf.set_font(font_invitados, "", 24)
     pdf.set_xy(120.65, 466.37)
-    pdf.set_char_spacing(5)
+    pdf.set_char_spacing(7)
     with pdf.rotation(90):
-        pdf.cell(295, 20, txt = txt_invitado, align = 'C')
+        pdf.cell(385, 20, txt = txt_invitado, align = 'C')
+
+    pdf.set_xy(180, 350)
+    pdf.cell(100, 100, link="https://goo.gl/maps/RLUk1SSV2RCDx1tV8")
+    pdf.set_xy(121, 650)
+    pdf.cell(100, 100, link="https://www.zepika.com/giftr/registry/view/uid/ximeyhono/")
     return pdf.output()
 #    pdf.output(path + txt_invitado + ".pdf")  
 
@@ -59,7 +64,7 @@ def pdfs_para_lista(lista):
 def main():
     
     reader = PdfReader("./base.pdf")
-    page_overlay = PdfReader(io.BytesIO(nuevo_pdf("Dos Invitados", "Isabel Morales Sirgo"))).getPage(0)
+    page_overlay = PdfReader(io.BytesIO(nuevo_pdf("DOS INVITADOS", "CAROLINA MIJARES Y SEBASTIAN DE NYS"))).getPage(0)
     reader.getPage(0).merge_page(page2=page_overlay)
 
     writer = PdfWriter()
