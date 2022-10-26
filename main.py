@@ -27,8 +27,8 @@ lista_2 = "Hono.csv"
 
 def nuevo_pdf(txt_boletos, txt_invitado):
     pdf = FPDF("P","mm", [376.76666667,577.58541667])
-    pdf.add_font('./Assistantant-Lite.ttf')
-    #pdf.add_font('./SafiraMarch-gxeKY.otf')
+    pdf.add_font('Assistantant-Lite','','./Assistantant-Lite.ttf', False)
+    pdf.add_font('SafiraMarch-gxeKY', '', './SafiraMarch-gxeKY.otf', False)
     pdf.add_page()
     pdf.set_font(font_boletos, "", 11)
     pdf.set_xy(90.4875, 374.65)
