@@ -37,17 +37,17 @@ def nuevo_pdf(txt_boletos, txt_invitado):
     pdf.set_font(font_boletos, "", 11)
     pdf.set_xy(100.65, 492.77)    
     pdf.set_char_spacing(5)
-    pdf.cell(108, 20, txt = txt_boletos, align = 'C')
+    pdf.cell(186, 20, txt = txt_boletos, align = 'C')
     pdf.set_font(font_invitados, "", 24)
     pdf.set_xy(120.65, 466.37)
     pdf.set_char_spacing(7)
     with pdf.rotation(90):
         pdf.cell(385, 20, txt = txt_invitado, align = 'C')
 
-    pdf.set_xy(180, 350)
-    pdf.cell(100, 100, link="https://goo.gl/maps/RLUk1SSV2RCDx1tV8")
-    pdf.set_xy(121, 650)
-    pdf.cell(100, 100, link="https://www.zepika.com/giftr/registry/view/uid/ximeyhono/")
+    # pdf.set_xy(180, 350)
+    pdf.link(180, 350, 100, 100, link="https://goo.gl/maps/RLUk1SSV2RCDx1tV8")
+    # pdf.set_xy(121, 650)
+    pdf.link(121, 650, 100, 100, link="https://www.zepika.com/giftr/registry/view/uid/ximeyhono/")
     return pdf.output()
 #    pdf.output(path + txt_invitado + ".pdf")  
 
