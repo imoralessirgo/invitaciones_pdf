@@ -2,7 +2,7 @@ import csv
 from json.tool import main
 from fpdf import FPDF
 import io
-from pdfrw import PageMerge, PdfReader, PdfWriter
+from PyPDF2 import PdfReader, PdfWriter
 
 
 
@@ -30,16 +30,16 @@ lista_1 = "Xime.csv"
 lista_2 = "Hono.csv"
 
 def nuevo_pdf(txt_boletos, txt_invitado):
-    pdf = FPDF("P","mm", [376.76666667,577.58541667])
+    pdf = FPDF("P","mm", [502.356,770.114])
     pdf.add_font(font_invitados,'','./' + font_invitados + '.ttf', False)
     pdf.add_font(font_boletos, '', './' + font_boletos + '.otf', False)
     pdf.add_page()
     pdf.set_font(font_boletos, "", 11)
-    pdf.set_xy(90.4875, 374.65)
+    pdf.set_xy(120.65, 503.77)    
     pdf.set_char_spacing(5)
     pdf.cell(108, 20, txt = txt_boletos, align = 'C')
     pdf.set_font(font_invitados, "", 22)
-    pdf.set_xy(89.958333333, 350.30833333)
+    pdf.set_xy(120.65, 466.37)
     pdf.set_char_spacing(5)
     with pdf.rotation(90):
         pdf.cell(295, 20, txt = txt_invitado, align = 'C')
